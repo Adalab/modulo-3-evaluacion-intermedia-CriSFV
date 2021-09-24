@@ -79,7 +79,7 @@ function App() {
           </select>
         </form>
       </header>
-      <ul>{printHTML}</ul>
+      <ul className='list'>{printHTML}</ul>
 
       <form className='new_club__form'>
         <h2>Añadir un nuevo club</h2>
