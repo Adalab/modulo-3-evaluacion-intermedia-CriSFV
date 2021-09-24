@@ -7,10 +7,12 @@ function App() {
   const [newName, setNewName] = useState('');
   const [newopenOnWeekdays, setNewopenOnWeekdays] = useState(false);
   const [newopenOnWeekend, setNewopenOnWeekend] = useState(false);
-
+  const [optionSelect, setOptionSelect] = useState('');
+  const handleSelect = (ev) => {
+    console.log(ev.currentTarget.value);
+    setOptionSelect(ev.currentTarget.value);
+  };
   const handleAddNewClub = (ev) => {
-    console.log(ev.currentTarget.name);
-    console.log(ev.currentTarget.checked);
     if (ev.currentTarget.name === 'name') {
       setNewName(ev.currentTarget.value);
     } else if (ev.currentTarget.name === 'openOnWeekdays') {
@@ -32,23 +34,44 @@ function App() {
     setNewopenOnWeekdays(false);
     setNewopenOnWeekend(false);
   };
+  const handleClickRemove = (ev) => {
+    ev.preventDefault();
+    console.log(ev.currentTarget.id);
+    data.splice(ev.currentTarget.id, 1);
+    setData([...data]);
+  };
 
-  const printHTML = data.map((eachData, index) => (
-    <li className='clubList' key={index}>
-      <h3>
-        #{index}: {eachData.name}
-      </h3>
-      <p>Abierto entre semana:{eachData.openOnWeekdays ? 'Sí' : 'No'} </p>
-      <p>Abierto el fin de semana:{eachData.openOnWeekend ? 'Sí' : 'No'}</p>
-    </li>
-  ));
+  const printHTML = data
+    // .filter((eachData) => eachData.openOnWeekdays.true === optionSelect.true)
+    .map((eachData, index) => (
+      <li className='clubList' key={index}>
+        <h3>
+          #{index}: {eachData.name}{' '}
+          <button
+            id={index}
+            className='clubList__icon'
+            onClick={handleClickRemove}
+          >
+            x
+          </button>
+        </h3>
+
+        <p>Abierto entre semana:{eachData.openOnWeekdays ? 'Sí' : 'No'} </p>
+        <p>Abierto el fin de semana:{eachData.openOnWeekend ? 'Sí' : 'No'}</p>
+      </li>
+    ));
 
   return (
     <div className='page'>
       <header className='header'>
         <h1 className='header__title'>Mis clubs</h1>
         <form>
-          <select name='list' id='list'>
+          <select
+            name='list'
+            id='list'
+            value={optionSelect}
+            onChange={handleSelect}
+          >
             Mostrar:
             <option value='all'>Todos</option>
             <option value='openOnWeekdays'>Abren los días de semana</option>

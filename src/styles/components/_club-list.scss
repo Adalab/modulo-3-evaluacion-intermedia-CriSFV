@@ -6,4 +6,11 @@
   border: 1px solid rgb(226, 40, 40);
   list-style: none;
   text-align: center;
+  &__icon {
+    background-color: red;
+    color: white;
+    border-radius: 15px;
+    height: 20px;
+    width: 20px;
+  }
 }
