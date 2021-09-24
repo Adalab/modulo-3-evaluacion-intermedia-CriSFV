@@ -4,10 +4,40 @@ import { useState } from 'react';
 
 function App() {
   const [data, setData] = useState(initialClubs);
+  const [newName, setNewName] = useState('');
+  const [newopenOnWeekdays, setNewopenOnWeekdays] = useState(false);
+  const [newopenOnWeekend, setNewopenOnWeekend] = useState(false);
+
+  const handleAddNewClub = (ev) => {
+    console.log(ev.currentTarget.name);
+    console.log(ev.currentTarget.checked);
+    if (ev.currentTarget.name === 'name') {
+      setNewName(ev.currentTarget.value);
+    } else if (ev.currentTarget.name === 'openOnWeekdays') {
+      setNewopenOnWeekdays(ev.currentTarget.checked ? true : false);
+    } else if (ev.currentTarget.name === 'openOnWeekend') {
+      setNewopenOnWeekend(ev.currentTarget.checked ? true : false);
+    }
+  };
+
+  const handleClickAdd = (ev) => {
+    ev.preventDefault();
+    const neWClub = {
+      name: newName,
+      openOnWeekdays: newopenOnWeekdays,
+      openOnWeekend: newopenOnWeekend,
+    };
+    setData([...data, neWClub]);
+    setNewName('');
+    setNewopenOnWeekdays(false);
+    setNewopenOnWeekend(false);
+  };
 
   const printHTML = data.map((eachData, index) => (
     <li className='clubList' key={index}>
-      <h3>{eachData.name}</h3>
+      <h3>
+        #{index}: {eachData.name}
+      </h3>
       <p>Abierto entre semana:{eachData.openOnWeekdays ? 'Sí' : 'No'} </p>
       <p>Abierto el fin de semana:{eachData.openOnWeekend ? 'Sí' : 'No'}</p>
     </li>
@@ -33,16 +63,32 @@ function App() {
         <label htmlFor=''>
           {' '}
           Nombre del club
-          <input type='text' name='name' placeholder='Escribe aquí el nombre' />
+          <input
+            type='text'
+            name='name'
+            value={newName}
+            onChange={handleAddNewClub}
+          />
         </label>
-        <labe>
+        <label>
           ¿Abre entre semana?
-          <input type='checkbox' name='openOnWeekdays' />
-        </labe>
-        <labe>
+          <input
+            type='checkbox'
+            name='openOnWeekdays'
+            checked={newopenOnWeekdays}
+            onChange={handleAddNewClub}
+          />
+        </label>
+        <label>
           ¿Abre los fines de semana?
-          <input type='checkbox' name='openOnWeekend' />
-        </labe>
+          <input
+            type='checkbox'
+            name='openOnWeekend'
+            checked={newopenOnWeekend}
+            onChange={handleAddNewClub}
+          />
+        </label>
+        <input type='submit' value='Añadir' onClick={handleClickAdd} />
       </form>
     </div>
   );
