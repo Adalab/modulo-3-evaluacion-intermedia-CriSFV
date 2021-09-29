@@ -7,7 +7,7 @@ function App() {
   const [newName, setNewName] = useState('');
   const [newopenOnWeekdays, setNewopenOnWeekdays] = useState(false);
   const [newopenOnWeekend, setNewopenOnWeekend] = useState(false);
-  const [optionSelect, setOptionSelect] = useState('');
+  const [optionSelect, setOptionSelect] = useState(''); //por defecto tiene que ser 'all'
   const handleSelect = (ev) => {
     console.log(ev.currentTarget.value);
     setOptionSelect(ev.currentTarget.value);
@@ -43,6 +43,7 @@ function App() {
 
   const printHTML = data
     // .filter((eachData) => eachData.openOnWeekdays.true === optionSelect.true)
+    //explicación .filter( (eachData)=>{if(optionSelect===openOnWeekDays){return eachData.OpenOnWeekdays===true}}  )
     .map((eachData, index) => (
       <li className='clubList' key={index}>
         <h3>
@@ -111,7 +112,12 @@ function App() {
             onChange={handleAddNewClub}
           />
         </label>
-        <input type='submit' value='Añadir' onClick={handleClickAdd} />
+        <input
+          className='new_club__addBtn'
+          type='submit'
+          value='Añadir'
+          onClick={handleClickAdd}
+        />
       </form>
     </div>
   );
