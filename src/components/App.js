@@ -7,11 +7,18 @@ function App() {
   const [newName, setNewName] = useState('');
   const [newopenOnWeekdays, setNewopenOnWeekdays] = useState(false);
   const [newopenOnWeekend, setNewopenOnWeekend] = useState(false);
-  const [optionSelect, setOptionSelect] = useState(''); //por defecto tiene que ser 'all'
+  const [optionSelect, setOptionSelect] = useState('all');
+
+  const neWClub = {
+    name: newName,
+    openOnWeekdays: newopenOnWeekdays,
+    openOnWeekend: newopenOnWeekend,
+  };
+
   const handleSelect = (ev) => {
-    console.log(ev.currentTarget.value);
     setOptionSelect(ev.currentTarget.value);
   };
+
   const handleAddNewClub = (ev) => {
     if (ev.currentTarget.name === 'name') {
       setNewName(ev.currentTarget.value);
@@ -24,11 +31,6 @@ function App() {
 
   const handleClickAdd = (ev) => {
     ev.preventDefault();
-    const neWClub = {
-      name: newName,
-      openOnWeekdays: newopenOnWeekdays,
-      openOnWeekend: newopenOnWeekend,
-    };
     setData([...data, neWClub]);
     setNewName('');
     setNewopenOnWeekdays(false);
@@ -42,12 +44,20 @@ function App() {
   };
 
   const printHTML = data
-    // .filter((eachData) => eachData.openOnWeekdays.true === optionSelect.true)
-    //explicación .filter( (eachData)=>{if(optionSelect===openOnWeekDays){return eachData.OpenOnWeekdays===true}}  )
+    .filter((eachData) => {
+      console.log(eachData);
+      if (optionSelect === 'openOnWeekdays') {
+        return eachData.openOnWeekdays === true;
+      } else if (optionSelect === 'openOnWeekend') {
+        return eachData.openOnWeekend === true;
+      } else {
+        return true;
+      }
+    })
     .map((eachData, index) => (
       <li className='clubList' key={index}>
         <h3>
-          #{index}: {eachData.name}{' '}
+          #{index}: {eachData.name}
           <button
             id={index}
             className='clubList__icon'
@@ -80,12 +90,12 @@ function App() {
           </select>
         </form>
       </header>
+
       <ul className='list'>{printHTML}</ul>
 
       <form className='new_club__form'>
         <h2>Añadir un nuevo club</h2>
         <label htmlFor=''>
-          {' '}
           Nombre del club
           <input
             type='text'
