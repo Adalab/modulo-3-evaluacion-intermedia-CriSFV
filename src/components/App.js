@@ -95,27 +95,30 @@ function App() {
 
       <form className='new_club__form'>
         <h2>Añadir un nuevo club</h2>
-        <label htmlFor=''>
+        <label htmlFor='' className='new_club__form__label'>
           Nombre del club
           <input
+            className='input'
             type='text'
             name='name'
             value={newName}
             onChange={handleAddNewClub}
           />
         </label>
-        <label>
+        <label className='new_club__form__label'>
           ¿Abre entre semana?
           <input
+            className='input'
             type='checkbox'
             name='openOnWeekdays'
             checked={newopenOnWeekdays}
             onChange={handleAddNewClub}
           />
         </label>
-        <label>
+        <label className='new_club__form__label'>
           ¿Abre los fines de semana?
           <input
+            className='input'
             type='checkbox'
             name='openOnWeekend'
             checked={newopenOnWeekend}
